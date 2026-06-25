@@ -1,25 +1,27 @@
-8{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste des vacataires
 {% endblock %}
 
 {% block body %}
-<div
-	class="container mt-4">
-	{# Affichage des messages flash de succès #}
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success mt-4">
-			{{ message }}
-		</div>
-	{% endfor %}
+	<div
+		class="container mt-4">
+		{# Affichage des messages flash de succès #}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-	<h1>Liste des vacataires</h1>
+		<h1>Liste des vacataires</h1>
 
 		<table class="table table-hover mt-4">
 			<thead>
 				<tr>
 					<th scope="col">ID</th>
 					<th scope="col">Nom</th>
+					<th scope="col">Edition</th>
+					<th scope="col">Suppression</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,11 +29,19 @@
 					<tr class="table-active">
 						<th scope="row">{{ vacataire.id }}</th>
 						<td>{{ vacataire.nom }}</td>
+						<td>
+							<a href="{{ path('vacataire_edit', {id: vacataire.id}) }}" class="btn btn-info btn-sm">Modifier</a>
+						</td>
+						<td>
+							<a href="{{ path('vacataire_delete', {id: vacataire.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce vacataire ?');">Supprimer</a>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 
+
+		{# Affichage de la pagination #}
 		<div class="navigation d-flex justify-content-center">
 			{{ knp_pagination_render(vacataires) }}
 		</div>
